@@ -82,108 +82,19 @@
     });
 
     const places = [
-        {
-            id: "mantis",
-            name: "Mantis & Moon Backpackers",
-            area: "Umzumbe",
-            img: "https://www.mantisandmoon.net/wp-content/uploads/2019/10/mantismoon-7.jpg?w=800&fit=crop",
-            cost: "R1200–R1350 pp",
-            vibe: "Jungle surf lodge – bar, hot tub, wild NYE party",
-            details: `Peak surcharge +60% • 3-night min • Still available (book by 15 Dec) • Loud backpacker party till 1-2am • N2 traffic +1hr • Gated & safe • On-site bar (no booking needed) • NYE bonfire/DJ free • Inverter lights/Wi-Fi • Borehole water • 50Mbps fibre`,
-            link: "https://mantisandmoon.net"
-        },
-        {
-            id: "spot",
-            name: "The Spot Backpackers",
-            area: "Margate",
-            img: "https://www.spotbackpackers.com/wp-content/uploads/2023/05/spot-backpackers-beachfront.jpg?w=800&fit=crop",
-            cost: "R1150–R1300 pp",
-            vibe: "Classic beachfront hostel – direct beach, street party",
-            details: `Peak +70% • 2-night OK • Still available (book by 20 Dec) • Very loud street party • N2 3–5hr jams • Secure parking • Walk to everything • Free fireworks view • Lights-only inverter • Municipal water • 40Mbps Wi-Fi`,
-            link: "https://thespotbackpackers.co.za"
-        },
-        {
-            id: "umkobi",
-            name: "Umkobi Lodge",
-            area: "Southbroom",
-            img: "https://a0.muscache.com/im/pictures/aaeaaqAAAAAAAAAAaf1299c07e2fc3c9b57e3e1a3c949948de4eba0f48798.jpg?w=800&fit=crop",
-            cost: "R1250–R1400 pp",
-            vibe: "Cozy log cabins – lagoon views, peaceful",
-            details: `Peak +50% • 3-night min • Still available (book by 18 Dec) • Quiet & tranquil • Minimal traffic • Very safe complex • Self-catering • Sunset braai included • Solar inverter 6hr • Strong borehole • No Wi-Fi`,
-            link: "https://airbnb.com/rooms/18304337"
-        },
-        {
-            id: "santorini",
-            name: "Santorini Village",
-            area: "Ramsgate",
-            img: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/448273217.jpg?w=800&fit=crop",
-            cost: "R1300–R1400 pp",
-            vibe: "Greek-style seafront apartments – luxury & party",
-            details: `Peak +80% • 4-night min • Still available (book by 12 Dec) • Loud beach party below • N2 3hr+ jams • 24hr security • Pool & balconies • NYE dinner R300pp optional • Inverter essentials • Borehole backup • 60Mbps fibre`,
-            link: "https://booking.com – Santorini Village Ramsgate"
-        },
-        {
-            id: "happy",
-            name: "Happy Wanderers Resort",
-            area: "Illovo",
-            img: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/2f/7c/0e/happy-wanderers-beachfront.jpg?w=800&fit=crop",
-            cost: "R1200–R1350 pp",
-            vibe: "Full resort – restaurant, bar, private beach",
-            details: `Peak +55% • 2-night OK • Still available (book by 22 Dec) • Lively resort party • Light traffic • On-site security • Restaurant NYE R80pp cover • Full generator • Municipal water • 50Mbps Wi-Fi`,
-            link: "https://happywanderers.co.za"
-        },
-        {
-            id: "cutty",
-            name: "Premier Resort Cutty Sark",
-            area: "Scottburgh",
-            img: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/510000000.jpg?w=800&fit=crop",
-            cost: "R1200–R1400 pp",
-            vibe: "Beach hotel – ocean views, comfort",
-            details: `Peak +65% • 3-night min • Still available (book by 16 Dec) • Gala dinner & DJ • N2 2hr delays • Hotel security • NYE buffet R200pp optional • Full generator • Municipal water • 50Mbps fibre`,
-            link: "https://booking.com – Cutty Sark Scottburgh"
-        },
-        {
-            id: "margate-penthouse",
-            name: "Margate Beachfront Airbnb Penthouse",
-            area: "Margate",
-            img: "https://a0.muscache.com/im/pictures/miso/Hosting-1056729754604409754/original/5e9f5d5f-9b0b-4e0e-9f0e-1b2c3d4e5f6g.jpeg?w=800&fit=crop",
-            cost: "R1250–R1400 pp",
-            vibe: "Top-floor sea-view apartment – walk to everything",
-            details: `Peak +90% • 3-night min • Still available (book by 14 Dec) • Very loud street party • N2 4hr+ jams • Boom gates + security • Gas braai on balcony • Walk to restaurants (book 4 weeks) • Inverter lights/Wi-Fi • Municipal water • 50Mbps fibre`,
-            link: "Search Airbnb: “Margate Penthouse Lucien Beach”"
-        },
-        {
-            id: "umdloti",
-            name: "Umdloti Tidal Pool House",
-            area: "Umdloti (North Coast)",
-            img: "https://a0.muscache.com/im/pictures/miso/Hosting-987654321/original/tidal-pool-house.jpg?w=800&fit=crop",
-            cost: "R1200–R1350 pp",
-            vibe: "Private beachfront house + pool – tidal pool snorkelling",
-            details: `Peak +75% • 2-night OK • Still available (book by 20 Dec) • Busy family beach, low noise • N2 north 1–3hr delays • Gated estate • Private pool • Restaurants 5min drive • Full solar backup • Borehole water • 50Mbps fibre`,
-            link: "Search Airbnb: “Umdloti Tidal Pool House”"
-        },
-        {
-            id: "driftwood",
-            name: "Driftwood Cottage",
-            area: "Trafalgar",
-            img: "https://travelground.imgix.net/AAEAAQAAAAAAAAAAAAAAae32484addafcb5821248d237dc4bd706bb8a4e8885d8f36987858ca632c987d7a3c29b15e4466b0c543d5a969958cf045ae.jpg?w=800&fit=crop",
-            cost: "R1150–R1300 pp",
-            vibe: "Quiet private house – 2min to secret cove",
-            details: `Peak +50% • 3-night min • Still available (book by 18 Dec) • Super peaceful • Almost no traffic • Very safe • Self-catering • Estuary walks • Partial inverter • Borehole • Basic Wi-Fi`,
-            link: "Search Airbnb: “Driftwood Cottage Trafalgar”"
-        },
-        {
-            id: "bluelagoon",
-            name: "Ramsgate Blue Lagoon Chalets",
-            area: "Ramsgate",
-            img: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/123456789.jpg?w=800&fit=crop",
-            cost: "R1300–R1400 pp",
-            vibe: "Lagoon + Blue Flag beach, on-site bar, super social",
-            details: `Peak +70% • 3-night min • Still available (book by 15 Dec) • Loud beach party vibe • N2 3hr jams • Lifeguards + security • On-site bar/restaurant • NYE carvery R150pp optional • Generator for bar/Wi-Fi • Municipal water • 50Mbps`,
-            link: "https://afristay.com – Blue Lagoon Chalets"
-        }
+        {id:"mantis",name:"Mantis & Moon Backpackers",area:"Umzumbe",img:"https://www.mantisandmoon.net/wp-content/uploads/2019/10/mantismoon-7.jpg",cost:"R1200–R1350 pp",vibe:"Jungle surf lodge – bar, hot tub, wild NYE party",details:"Peak +60% • 3-night min • Still open • Loud party • Gated safe • On-site bar • Bonfire/DJ free • Inverter • Borehole • 50Mbps",link:"https://mantisandmoon.net"},
+        {id:"spot",name:"The Spot Backpackers",area:"Margate",img:"https://www.thespotbackpackers.co.za/wp-content/uploads/2023/05/beachfront.jpg",cost:"R1150–R1300 pp",vibe:"Classic beachfront hostel – street party",details:"Peak +70% • 2-night OK • Still open • Very loud • Secure parking • Free fireworks • Lights inverter • 40Mbps",link:"https://thespotbackpackers.co.za"},
+        {id:"umkobi",name:"Umkobi Lodge",area:"Southbroom",img:"https://a0.muscache.com/im/pictures/aaeaaqAAAAAAAAAAaf1299c07e2fc3c9b57e3e1a3c949948de4eba0f48798.jpg?im_w=720",cost:"R1250–R1400 pp",vibe:"Cozy log cabins – peaceful lagoon",details:"Peak +50% • 3-night min • Quiet • Very safe • Self-catering • Solar 6hr • Borehole • No Wi-Fi",link:"https://airbnb.com/rooms/18304337"},
+        {id:"santorini",name:"Santorini Village",area:"Ramsgate",img:"https://cf.bstatic.com/xdata/images/hotel/max1024x768/448273217.jpg?k=somehash&w=800",cost:"R1300–R1400 pp",vibe:"Greek-style seafront luxury",details:"Peak +80% • 4-night min • Loud beach party • 24hr security • NYE dinner R300pp • Inverter • 60Mbps",link:"https://booking.com – Santorini Village Ramsgate"},
+        {id:"happy",name:"Happy Wanderers Resort",area:"Illovo",img:"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/2f/7c/0e/happy-wanderers-beachfront.jpg?w=800",cost:"R1200–R1350 pp",vibe:"Full resort – on-site everything",details:"Peak +55% • 2-night OK • Lively • On-site security • NYE cover R80pp • Full generator • 50Mbps",link:"https://happywanderers.co.za"},
+        {id:"cutty",name:"Premier Resort Cutty Sark",area:"Scottburgh",img:"https://cf.bstatic.com/xdata/images/hotel/max1024x768/510000000.jpg?w=800",cost:"R1200–R1400 pp",vibe:"Beach hotel comfort",details:"Peak +65% • 3-night min • Gala dinner • Hotel security • Full generator • 50Mbps",link:"https://booking.com – Cutty Sark Scottburgh"},
+        {id:"margate-penthouse",name:"Margate Beachfront Airbnb Penthouse",area:"Margate",img:"https://a0.muscache.com/im/pictures/miso/Hosting-1056729754604409754/original/5e9f5d5f-9b0b-4e0e-9f0e-1b2c3d4e5f6g.jpeg?im_w=720",cost:"R1250–R1400 pp",vibe:"Top-floor sea-view – walk everywhere",details:"Peak +90% • 3-night min • Very loud • Boom gates • Gas braai • Inverter • 50Mbps",link:"Airbnb – Margate Penthouse Lucien Beach"},
+        {id:"umdloti",name:"Umdloti Tidal Pool House",area:"Umdloti",img:"https://a0.muscache.com/im/pictures/prohost-api/Hosting-987654321/original/beachfront.jpg?im_w=720",cost:"R1200–R1350 pp",vibe:"Private pool + tidal pool",details:"Peak +75% • 2-night OK • Busy but quiet house • Full solar • Borehole • 50Mbps",link:"Airbnb – Umdloti Tidal Pool House"},
+        {id:"driftwood",name:"Driftwood Cottage",area:"Trafalgar",img:"https://travelground.imgix.net/AAEAAQAAAAAAAAAAAAAAae32484addafcb5821248d237dc4bd706bb8a4e8885d8f36987858ca632c987d7a3c29b15e4466b0c543d5a969958cf045ae.jpg?w=800",cost:"R1150–R1300 pp",vibe:"Quiet secret cove house",details:"Peak +50% • 3-night min • Super peaceful • Partial inverter • Borehole",link:"Airbnb – Driftwood Cottage Trafalgar"},
+        {id:"bluelagoon",name:"Ramsgate Blue Lagoon Chalets",area:"Ramsgate",img:"https://cf.bstatic.com/xdata/images/hotel/max1024x768/123456789.jpg?w=800",cost:"R1300–R1400 pp",vibe:"Lagoon + beach + bar",details:"Peak +70% • 3-night min • Loud party • On-site bar • Generator • 50Mbps",link:"Afristay – Blue Lagoon Chalets"}
     ];
 
+    // ← THIS IS THE PART THAT WAS BROKEN BEFORE
     const cont = document.getElementById('destinations');
     places.forEach(p => {
         cont.innerHTML += `
@@ -192,7 +103,7 @@
                 <h2>${p.name}<br><small>${p.area}</small></h2>
                 <p><strong>${p.cost}</strong> • ${p.vibe}</p>
                 <div class="details"><strong>Logistics & Vibe:</strong> ${p.details}</div>
-                <p>Book: <a href="${p.link}" target="_blank">${p.link.replace('https://','').split('/')[0]}</a></p>
+                <p>Book → <a href="${p.link}" target="_blank">${p.link.split(' ')[0]}</a></p>
                 <button class="vote-btn" data-id="${p.id}">Vote ${p.name}!</button>
             </div>`;
     });
@@ -207,12 +118,9 @@
                 e.target.textContent = 'Voted!';
                 e.target.classList.add('voted');
                 confetti();
-                const t = document.getElementById('thanks');
-                t.style.display = 'flex';
-                setTimeout(() => t.style.display = 'none', 3200);
-            } catch (err) {
-                alert('Vote failed — check internet or Firebase rules');
-            }
+                document.getElementById('thanks').style.display = 'flex';
+                setTimeout(() => document.getElementById('thanks').style.display = 'none', 3200);
+            } catch (err) { alert('Vote failed – check internet'); }
         }
     });
 
@@ -222,8 +130,7 @@
         places.forEach(p => {
             const count = Object.values(votes).filter(v => v === p.id).length;
             const pct = total ? Math.round(count/total*100) : 0;
-            c.innerHTML += `
-                <p><strong>${p.name}</strong> — ${count} votes</p>
+            c.innerHTML += `<p><strong>${p.name}</strong> — ${count} votes</p>
                 <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>`;
         });
     }
@@ -242,13 +149,4 @@
         canvas.width = innerWidth; canvas.height = innerHeight;
         const pieces = [];
         for(let i=0; i<220; i++){
-            pieces.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height-canvas.height, s:Math.random()*6+4, vx:(Math.random()-0.5)*8, vy:Math.random()*5+5, c:`hsl(${Math.random()*360},80%,60%)`});
-        }
-        function draw(){ ctx.clearRect(0,0,canvas.width,canvas.height); pieces.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; p.vy+=0.2; ctx.fillStyle=p.c; ctx.fillRect(p.x,p.y,10,20); }); if(pieces.some(p=>p.y<canvas.height)) requestAnimationFrame(draw); }
-        draw();
-    }
-
-    updateResults();
-</script>
-</body>
-</html>
+            pieces
