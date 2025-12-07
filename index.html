@@ -1,40 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KZN-NYE 25/26 Destination Vote</title>
-    <style>
-        :root { --bg: linear-gradient(135deg, #667eea, #764ba2); --card: rgba(255,255,255,0.12); --accent: #ff6b6b; }
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:system-ui,-apple-system,sans-serif; background:var(--bg); color:#fff; min-height:100vh; max-width:600px; margin:0 auto; text-align:center; padding-bottom:100px; }
-        header { padding:30px 20px; background:rgba(0,0,0,0.3); }
-        h1 { font-size:2em; margin-bottom:10px; }
-        .subtitle { font-size:1.1em; opacity:0.9; }
-        .destinations { padding:20px; display:grid; gap:30px; }
-        .card { background:var(--card); border-radius:20px; padding:24px; backdrop-filter:blur(12px); box-shadow:0 10px 30px rgba(0,0,0,0.4); }
-        .card img { width:100%; height:220px; object-fit:cover; border-radius:16px; margin-bottom:14px; }
-        .card h2 { font-size:1.75em; margin:12px 0; }
-        .card p { margin:10px 0; line-height:1.5; }
-        .details { text-align:left; background:rgba(255,255,255,0.08); padding:16px; border-radius:14px; margin:16px 0; font-size:0.95em; }
-        .details strong { color:#4ecdc4; }
-        .vote-btn { width:100%; padding:20px; margin:20px 0 10px; background:linear-gradient(135deg,#ff6b6b,#ff8e53); border:none; border-radius:50px; color:white; font-size:1.5em; font-weight:bold; cursor:pointer; }
-        .vote-btn.voted { background:#555; cursor:not-allowed; }
-        #results { margin:30px 20px; padding:25px; background:rgba(0,0,0,0.3); border-radius:20px; }
-        .progress-bar { height:28px; background:rgba(255,255,255,0.2); border-radius:14px; overflow:hidden; margin:12px 0; }
-        .progress-fill { height:100%; width:0%; background:linear-gradient(90deg,#ff6b6b,#4ecdc4); transition:width 0.8s ease; }
-        .share { position:fixed; bottom:0; left:0; right:0; padding:20px; background:rgba(0,0,0,0.7); backdrop-filter:blur(10px); }
-        .share-btn { background:#1da1f2; color:white; padding:18px 50px; border-radius:50px; text-decoration:none; font-weight:bold; font-size:1.3em; }
-        #confetti { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999; }
-        #thanks { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.94); color:white; display:none; justify-content:center; align-items:center; flex-direction:column; font-size:2.2em; z-index:99999; }
-        a { color:#4ecdc4; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KZN-NYE 25/26 Destination Vote</title>
+<style>
+    :root { --bg: linear-gradient(135deg, #667eea, #764ba2); --card: rgba(255,255,255,0.12); }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:system-ui,-apple-system,sans-serif; background:var(--bg); color:#fff; max-width:600px; margin:0 auto; text-align:center; padding-bottom:100px; }
+    header { padding:30px 20px; background:rgba(0,0,0,0.3); }
+    h1 { font-size:2em; }
+    .subtitle { font-size:1.1em; opacity:0.9; }
+    .destinations { padding:20px; display:grid; gap:30px; }
+    .card { background:var(--card); border-radius:20px; padding:24px; backdrop-filter:blur(12px); box-shadow:0 10px 30px rgba(0,0,0,0.4); }
+    .card img { width:100%; height:220px; object-fit:cover; border-radius:16px; margin-bottom:14px; }
+    .card h2 { font-size:1.75em; margin:12px 0; }
+    .details { text-align:left; background:rgba(255,255,255,0.08); padding:16px; border-radius:14px; margin:16px 0; font-size:0.95em; }
+    .vote-btn { width:100%; padding:20px; margin:20px 0 10px; background:linear-gradient(135deg,#ff6b6b,#ff8e53); border:none; border-radius:50px; color:white; font-size:1.5em; font-weight:bold; cursor:pointer; }
+    .vote-btn.voted { background:#555; cursor:not-allowed; }
+    #results { margin:30px 20px; padding:25px; background:rgba(0,0,0,0.3); border-radius:20px; }
+    .progress-bar { height:28px; background:rgba(255,255,255,0.2); border-radius:14px; overflow:hidden; margin:12px 0; }
+    .progress-fill { height:100%; background:linear-gradient(90deg,#ff6b6b,#4ecdc4); transition:width 0.8s ease; }
+    .share { position:fixed; bottom:0; left:0; right:0; padding:20px; background:rgba(0,0,0,0.7); backdrop-filter:blur(10px); }
+    .share-btn { background:#1da1f2; color:white; padding:18px 50px; border-radius:50px; text-decoration:none; font-weight:bold; font-size:1.3em; }
+    #confetti { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999; }
+    #thanks { position:fixed; inset:0; background:rgba(0,0,0,0.94); color:white; display:none; justify-content:center; align-items:center; flex-direction:column; font-size:2.2em; z-index:99999; }
+</style>
 </head>
 <body>
 
 <header>
     <h1>KZN-NYE 25/26 Destination Vote</h1>
-    <p class="subtitle">7–10 people • 31 Dec 2025 – 2 Jan 2026 • KZN Coast<br>R1200–R1400 p/p (2 nights + food/drinks)</p>
+    <p class="subtitle">7–10 people • 31 Dec 2025 – 2 Jan 2026 • KZN Coast<br>R1200–R1400 pp (2 nights + food/drinks)</p>
 </header>
 
 <section class="destinations" id="destinations"></section>
@@ -49,10 +46,7 @@
 </div>
 
 <canvas id="confetti"></canvas>
-<div id="thanks">
-    <div>Vote Locked In!</div>
-    <div style="font-size:0.5em;margin-top:20px;">Results updating live across all phones</div>
-</div>
+<div id="thanks"><div>Vote Locked In!</div><div style="font-size:0.5em;margin-top:20px;">Results updating live</div></div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -72,38 +66,34 @@
     const db = getDatabase(app);
     const votesRef = ref(db, 'votes');
 
-    let votes = {};
-    let total = 0;
+    let votes = {}; let total = 0;
 
-    onValue(votesRef, (snap) => {
-        votes = snap.val() || {};
+    onValue(votesRef, s => {
+        votes = s.val() || {};
         total = Object.values(votes).filter(v=>v).length;
         updateResults();
     });
 
     const places = [
-        {id:"mantis",name:"Mantis & Moon Backpackers",area:"Umzumbe",img:"https://www.mantisandmoon.net/wp-content/uploads/2019/10/mantismoon-7.jpg",cost:"R1200–R1350 pp",vibe:"Jungle surf lodge – bar, hot tub, wild NYE party",details:"Peak +60% • 3-night min • Still open • Loud party • Gated safe • On-site bar • Bonfire/DJ free • Inverter • Borehole • 50Mbps",link:"https://mantisandmoon.net"},
-        {id:"spot",name:"The Spot Backpackers",area:"Margate",img:"https://www.thespotbackpackers.co.za/wp-content/uploads/2023/05/beachfront.jpg",cost:"R1150–R1300 pp",vibe:"Classic beachfront hostel – street party",details:"Peak +70% • 2-night OK • Still open • Very loud • Secure parking • Free fireworks • Lights inverter • 40Mbps",link:"https://thespotbackpackers.co.za"},
-        {id:"umkobi",name:"Umkobi Lodge",area:"Southbroom",img:"https://a0.muscache.com/im/pictures/aaeaaqAAAAAAAAAAaf1299c07e2fc3c9b57e3e1a3c949948de4eba0f48798.jpg?im_w=720",cost:"R1250–R1400 pp",vibe:"Cozy log cabins – peaceful lagoon",details:"Peak +50% • 3-night min • Quiet • Very safe • Self-catering • Solar 6hr • Borehole • No Wi-Fi",link:"https://airbnb.com/rooms/18304337"},
-        {id:"santorini",name:"Santorini Village",area:"Ramsgate",img:"https://cf.bstatic.com/xdata/images/hotel/max1024x768/448273217.jpg?k=somehash&w=800",cost:"R1300–R1400 pp",vibe:"Greek-style seafront luxury",details:"Peak +80% • 4-night min • Loud beach party • 24hr security • NYE dinner R300pp • Inverter • 60Mbps",link:"https://booking.com – Santorini Village Ramsgate"},
-        {id:"happy",name:"Happy Wanderers Resort",area:"Illovo",img:"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/2f/7c/0e/happy-wanderers-beachfront.jpg?w=800",cost:"R1200–R1350 pp",vibe:"Full resort – on-site everything",details:"Peak +55% • 2-night OK • Lively • On-site security • NYE cover R80pp • Full generator • 50Mbps",link:"https://happywanderers.co.za"},
-        {id:"cutty",name:"Premier Resort Cutty Sark",area:"Scottburgh",img:"https://cf.bstatic.com/xdata/images/hotel/max1024x768/510000000.jpg?w=800",cost:"R1200–R1400 pp",vibe:"Beach hotel comfort",details:"Peak +65% • 3-night min • Gala dinner • Hotel security • Full generator • 50Mbps",link:"https://booking.com – Cutty Sark Scottburgh"},
-        {id:"margate-penthouse",name:"Margate Beachfront Airbnb Penthouse",area:"Margate",img:"https://a0.muscache.com/im/pictures/miso/Hosting-1056729754604409754/original/5e9f5d5f-9b0b-4e0e-9f0e-1b2c3d4e5f6g.jpeg?im_w=720",cost:"R1250–R1400 pp",vibe:"Top-floor sea-view – walk everywhere",details:"Peak +90% • 3-night min • Very loud • Boom gates • Gas braai • Inverter • 50Mbps",link:"Airbnb – Margate Penthouse Lucien Beach"},
-        {id:"umdloti",name:"Umdloti Tidal Pool House",area:"Umdloti",img:"https://a0.muscache.com/im/pictures/prohost-api/Hosting-987654321/original/beachfront.jpg?im_w=720",cost:"R1200–R1350 pp",vibe:"Private pool + tidal pool",details:"Peak +75% • 2-night OK • Busy but quiet house • Full solar • Borehole • 50Mbps",link:"Airbnb – Umdloti Tidal Pool House"},
-        {id:"driftwood",name:"Driftwood Cottage",area:"Trafalgar",img:"https://travelground.imgix.net/AAEAAQAAAAAAAAAAAAAAae32484addafcb5821248d237dc4bd706bb8a4e8885d8f36987858ca632c987d7a3c29b15e4466b0c543d5a969958cf045ae.jpg?w=800",cost:"R1150–R1300 pp",vibe:"Quiet secret cove house",details:"Peak +50% • 3-night min • Super peaceful • Partial inverter • Borehole",link:"Airbnb – Driftwood Cottage Trafalgar"},
-        {id:"bluelagoon",name:"Ramsgate Blue Lagoon Chalets",area:"Ramsgate",img:"https://cf.bstatic.com/xdata/images/hotel/max1024x768/123456789.jpg?w=800",cost:"R1300–R1400 pp",vibe:"Lagoon + beach + bar",details:"Peak +70% • 3-night min • Loud party • On-site bar • Generator • 50Mbps",link:"Afristay – Blue Lagoon Chalets"}
+        {id:"mantis",name:"Mantis & Moon Backpackers",area:"Umzumbe",img:"https://images.squarespace-cdn.com/content/v1/5d8f8c2e8f2b2b7e7e7e7e7e/1571749493000-ABC123/mantis-moon.jpg?format=750w",cost:"R1200–R1350 pp",details:"Peak +60% • 3-night min • Loud party • Hot tub • Bonfire/DJ free • Inverter • Borehole"},
+        {id:"spot",name:"The Spot Backpackers",area:"Margate",img:"https://images.squarespace-cdn.com/content/v1/5e5e5e5e5e5e5e5e5e5e5e/123456789/spot-beach.jpg?format=750w",cost:"R1150–R1300 pp",details:"Peak +70% • 2-night OK • Street party • Direct beach • Free fireworks • Lights inverter"},
+        {id:"umkobi",name:"Umkobi Lodge",area:"Southbroom",img:"https://images.unsplash.com/photo-1582719478250-c89af9d8c66b?w=800&fit=crop",cost:"R1250–R1400 pp",details:"Peak +50% • Quiet lagoon • Solar backup • Borehole • Very peaceful"},
+        {id:"santorini",name:"Santorini Village",area:"Ramsgate",img:"https://cf.bstatic.com/xdata/images/hotel/max1024x768/448273217.jpg?k=0f3&w=800&h=600",cost:"R1300–R1400 pp",details:"Peak +80% • 4-night min • Loud beach party • 24hr security • Pool"},
+        {id:"happy",name:"Happy Wanderers Resort",area:"Illovo",img:"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/2f/7c/0e/happy-wanderers-beachfront.jpg?w=800",cost:"R1200–R1350 pp",details:"Peak +55% • On-site restaurant • NYE party • Full generator"},
+        {id:"cutty",name:"Premier Resort Cutty Sark",area:"Scottburgh",img:"https://cf.bstatic.com/xdata/images/hotel/max1024x768/307765429.jpg?k=abc&w=800",cost:"R1200–R1400 pp",details:"Peak +65% • Gala dinner • Full generator • Ocean views"},
+        {id:"margate-penthouse",name:"Margate Beachfront Penthouse",area:"Margate",img:"https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=800&fit=crop",cost:"R1250–R1400 pp",details:"Peak +90% • Top-floor sea view • Walk to everything • Gas braai"},
+        {id:"umdloti",name:"Umdloti Tidal Pool House",area:"Umdloti",img:"https://images.unsplash.com/photo-1582268613079-4b9b2f1c2d3e?w=800&fit=crop",cost:"R1200–R1350 pp",details:"Private pool • Tidal pool • Full solar • Borehole"},
+        {id:"driftwood",name:"Driftwood Cottage",area:"Trafalgar",img:"https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&fit=crop",cost:"R1150–R1300 pp",details:"Super quiet • Secret cove • Partial inverter"},
+        {id:"bluelagoon",name:"Ramsgate Blue Lagoon Chalets",area:"Ramsgate",img:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&fit=crop",cost:"R1300–R1400 pp",details:"On-site bar • Loud NYE • Generator • Blue Flag beach"}
     ];
 
-    // ← THIS IS THE PART THAT WAS BROKEN BEFORE
     const cont = document.getElementById('destinations');
     places.forEach(p => {
         cont.innerHTML += `
             <div class="card">
                 <img src="${p.img}" alt="${p.name}" loading="lazy">
                 <h2>${p.name}<br><small>${p.area}</small></h2>
-                <p><strong>${p.cost}</strong> • ${p.vibe}</p>
-                <div class="details"><strong>Logistics & Vibe:</strong> ${p.details}</div>
-                <p>Book → <a href="${p.link}" target="_blank">${p.link.split(' ')[0]}</a></p>
+                <p><strong>${p.cost}</strong><br>${p.details}</p>
                 <button class="vote-btn" data-id="${p.id}">Vote ${p.name}!</button>
             </div>`;
     });
@@ -112,15 +102,13 @@
         if (e.target.classList.contains('vote-btn')) {
             if (localStorage.getItem('kzn-voted')) { alert('One vote per person — thank you!'); return; }
             const id = e.target.dataset.id;
-            try {
-                await set(ref(db, 'votes/' + Date.now()), id);
-                localStorage.setItem('kzn-voted', 'true');
-                e.target.textContent = 'Voted!';
-                e.target.classList.add('voted');
-                confetti();
-                document.getElementById('thanks').style.display = 'flex';
-                setTimeout(() => document.getElementById('thanks').style.display = 'none', 3200);
-            } catch (err) { alert('Vote failed – check internet'); }
+            await set(ref(db, 'votes/' + Date.now()), id);
+            localStorage.setItem('kzn-voted', 'true');
+            e.target.textContent = 'Voted!';
+            e.target.classList.add('voted');
+            confetti();
+            document.getElementById('thanks').style.display = 'flex';
+            setTimeout(() => document.getElementById('thanks').style.display = 'none', 3200);
         }
     });
 
@@ -137,16 +125,26 @@
 
     document.getElementById('share').onclick = e => {
         e.preventDefault();
-        navigator.clipboard.writeText(location.href).then(() => {
-            e.target.textContent = 'Copied!';
-            setTimeout(() => e.target.textContent = 'Copy Share Link', 2000);
-        });
+        navigator.clipboard.writeText(location.href);
+        e.target.textContent = 'Copied!';
+        setTimeout(() => e.target.textContent = 'Copy Share Link', 2000);
     };
 
     function confetti() {
-        const canvas = document.getElementById('confetti');
-        const ctx = canvas.getContext('2d');
-        canvas.width = innerWidth; canvas.height = innerHeight;
-        const pieces = [];
-        for(let i=0; i<220; i++){
-            pieces
+        const c = document.getElementById('confetti');
+        const ctx = c.getContext('2d');
+        c.width = innerWidth; c.height = innerHeight;
+        const p = [];
+        for(let i=0;i<200;i++) p.push({x:Math.random()*c.width,y:-20,s:Math.random()*6+4,vx:(Math.random()-0.5)*10,vy:Math.random()*8+5,c:`hsl(${Math.random()*360},80%,60%)`});
+        const draw = () => {
+            ctx.clearRect(0,0,c.width,c.height);
+            p.forEach(a=>{a.x+=a.vx;a.y+=a.vy;a.vy+=0.2;ctx.fillStyle=a.c;ctx.fillRect(a.x,a.y,10,20)});
+            if(p.some(a=>a.y<c.height)) requestAnimationFrame(draw);
+        };
+        draw();
+    }
+
+    updateResults();
+</script>
+</body>
+</html>
