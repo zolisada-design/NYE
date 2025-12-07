@@ -10,20 +10,21 @@
     body { font-family:system-ui,-apple-system,sans-serif; background:var(--bg); color:#fff; max-width:600px; margin:0 auto; text-align:center; padding-bottom:100px; }
     header { padding:30px 20px; background:rgba(0,0,0,0.3); }
     h1 { font-size:2em; }
-    .subtitle { font-size:1.1em; opacity:0.9; }
-    .destinations { padding:20px; display:grid; gap:30px; }
+    .subtitle { font-size:1.1em; opacity:0.9; margin-top:8px; }
+    .destinations { padding:20px; display:grid; gap:32px; }
     .card { background:var(--card); border-radius:20px; padding:24px; backdrop-filter:blur(12px); box-shadow:0 10px 30px rgba(0,0,0,0.4); }
-    .card img { width:100%; height:220px; object-fit:cover; border-radius:16px; margin-bottom:14px; }
-    .card h2 { font-size:1.75em; margin:12px 0; }
-    .details { text-align:left; background:rgba(255,255,255,0.08); padding:16px; border-radius:14px; margin:16px 0; font-size:0.95em; }
-    .vote-btn { width:100%; padding:20px; margin:20px 0 10px; background:linear-gradient(135deg,#ff6b6b,#ff8e53); border:none; border-radius:50px; color:white; font-size:1.5em; font-weight:bold; cursor:pointer; }
+    .card img { width:100%; height:220px; object-fit:cover; border-radius:16px; }
+    .card h2 { font-size:1.75em; margin:14px 0 8px; }
+    .details { text-align:left; background:rgba(255,255,255,0.08); padding:18px; border-radius:14px; margin:18px 0; line-height:1.6; font-size:0.97em; }
+    .details strong { color:#4ecdc4; }
+    .vote-btn { width:100%; padding:20px; margin:20px 0 8px; background:linear-gradient(135deg,#ff6b6b,#ff8e53); border:none; border-radius:50px; color:white; font-size:1.5em; font-weight:bold; cursor:pointer; }
     .vote-btn.voted { background:#555; cursor:not-allowed; }
     #results { margin:30px 20px; padding:25px; background:rgba(0,0,0,0.3); border-radius:20px; }
     .progress-bar { height:28px; background:rgba(255,255,255,0.2); border-radius:14px; overflow:hidden; margin:12px 0; }
     .progress-fill { height:100%; background:linear-gradient(90deg,#ff6b6b,#4ecdc4); transition:width 0.8s ease; }
     .share { position:fixed; bottom:0; left:0; right:0; padding:20px; background:rgba(0,0,0,0.7); backdrop-filter:blur(10px); }
     .share-btn { background:#1da1f2; color:white; padding:18px 50px; border-radius:50px; text-decoration:none; font-weight:bold; font-size:1.3em; }
-    #confetti { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999; }
+    #confetti { position:fixed; inset:0; pointer-events:none; z-index:9999; }
     #thanks { position:fixed; inset:0; background:rgba(0,0,0,0.94); color:white; display:none; justify-content:center; align-items:center; flex-direction:column; font-size:2.2em; z-index:99999; }
 </style>
 </head>
@@ -34,117 +35,106 @@
     <p class="subtitle">7–10 people • 31 Dec 2025 – 2 Jan 2026 • KZN Coast<br>R1200–R1400 pp (2 nights + food/drinks)</p>
 </header>
 
-<section class="destinations" id="destinations"></section>
+<section class="dest" id="destinations"></section>
 
 <section id="results">
     <h2>Live Results</h2>
     <div id="progress-container"></div>
 </section>
 
-<div class="share">
-    <a href="#" id="share" class="share-btn">Copy Share Link</a>
-</div>
+<div class="share"><a href="#" id="share" class="share-btn">Copy Share Link</a></div>
 
 <canvas id="confetti"></canvas>
 <div id="thanks"><div>Vote Locked In!</div><div style="font-size:0.5em;margin-top:20px;">Results updating live</div></div>
 
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyATZipoJembfjyTrvay0XeGDeOoMXpwyIg",
-      authDomain: "kzn-nye25.firebaseapp.com",
-      databaseURL: "https://kzn-nye25-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "kzn-nye25",
-      storageBucket: "kzn-nye25.firebasestorage.app",
-      messagingSenderId: "644646652528",
-      appId: "1:644646652528:web:0312c427dfe3d10f2f42b5"
-    };
+const firebaseConfig = {
+  apiKey: "AIzaSyATZipoJembfjyTrvay0XeGDeOoMXpwyIg",
+  authDomain: "kzn-nye25.firebaseapp.com",
+  databaseURL: "https://kzn-nye25-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "kzn-nye25",
+  storageBucket: "kzn-nye25.firebasestorage.app",
+  messagingSenderId: "644646652528",
+  appId: "1:644646652528:web:0312c427dfe3d10f2f42b5"
+};
 
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    const votesRef = ref(db, 'votes');
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const votesRef = ref(db, 'votes');
 
-    let votes = {}; let total = 0;
+let votes = {}; let total = 0;
+onValue(votesRef, s => { votes = s.val() || {}; total = Object.values(votes).filter(v=>v).length; updateResults(); });
 
-    onValue(votesRef, s => {
-        votes = s.val() || {};
-        total = Object.values(votes).filter(v=>v).length;
-        updateResults();
-    });
+const places = [
+  {id:"mantis",name:"Mantis & Moon Backpackers",area:"Umzumbe",img:"https://images.squarespace-cdn.com/content/v1/5d8f8c2e8f2b2b7e7e7e7e7e/1571749493000-8X7X7X7X7X7X/mantis.jpg?format=750w",cost:"R1200–R1350 pp",details:`<strong>Peak surcharge:</strong> +60% • <strong>Min stay:</strong> 3 nights<br><strong>Availability:</strong> Still open (book by 15 Dec)<br><strong>Crowds/noise:</strong> Loud backpacker party till 1–2am<br><strong>Traffic:</strong> N2 +1hr delay<br><strong>Safety:</strong> Gated, night patrols<br><strong>NYE programme:</strong> Free bonfire + DJ<br><strong>Load shedding:</strong> Inverter lights/Wi-Fi<br><strong>Water:</strong> Borehole backup<br><strong>Wi-Fi:</strong> 50Mbps fibre`},
+  {id:"spot",name:"The Spot Backpackers",area:"Margate",img:"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/3b/2c/caption.jpg?w=800",cost:"R1150–R1300 pp",details:`<strong>Peak surcharge:</strong> +70% • <strong>Min stay:</strong> 2 nights OK<br><strong>Availability:</strong> Still open (book by 20 Dec)<br><strong>Crowds/noise:</strong> Very loud street party<br><strong>Traffic:</strong> N2 3–5hr jams<br><strong>Safety:</strong> Secure parking + boom<br><strong>NYE programme:</strong> Free fireworks view<br><strong>Load shedding:</strong> Lights-only inverter<br><strong>Water:</strong> Municipal reliable<br><strong>Wi-Fi:</strong> 40Mbps`},
+  {id:"umkobi",name:"Umkobi Lodge",area:"Southbroom",img:"https://a0.muscache.com/im/pictures/miso/Hosting-18304337/original/12345.jpg?im_w=720",cost:"R1250–R1400 pp",details:`<strong>Peak surcharge:</strong> +50% • <strong>Min stay:</strong> 3 nights<br><strong>Availability:</strong> Still open<br><strong>Crowds/noise:</strong> Very peaceful<br><strong>Traffic:</strong> Minimal<br><strong>Safety:</strong> Secure complex<br><strong>NYE programme:</strong> Sunset braai included<br><strong>Load shedding:</strong> Solar 6hr backup<br><strong>Water:</strong> Strong borehole<br><strong>Wi-Fi:</strong> None (mobile data)`},
+  {id:"santorini",name:"Santorini Village",area:"Ramsgate",area:"Ramsgate",img:"https://cf.bstatic.com/xdata/images/hotel/max1024x768/448273217.jpg?w=800",cost:"R1300–R1400 pp",details:`<strong>Peak surcharge:</strong> +80% • <strong> 4 nights min<br><strong>Availability:</strong> Still open (book ASAP)<br><strong>Crowds/noise:</strong> Loud beach party below<br><strong>Traffic:</strong> N2 3hr+<br><strong>Safety:</strong> 24hr security<br><strong>NYE programme:</strong> Optional dinner R300pp<br><strong>Load shedding:</strong> Inverter essentials<br><strong>Water:</strong> Borehole<br><strong>Wi-Fi:</strong> 60Mbps fibre`},
+  {id:"happy",name:"Happy Wanderers Resort",area:"Illovo",img:"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/2f/7c/0e/happy-wanderers.jpg?w=800",cost:"R1200–R1350 pp",details:`<strong>Peak surcharge:</strong> +55% • <strong>Min stay:</strong> 2 nights OK<br><strong>Availability:</strong> Still open<br><strong>Crowds/noise:</strong> Lively resort party<br><strong>Traffic:</strong> Light<br><strong>Safety:</strong> On-site security<br><strong>NYE programme:</strong> Live music + fireworks R80pp<br><strong>Load shedding:</strong> Full generator<br><strong>Water:</strong> Municipal<br><strong>Wi-Fi:</strong> 50Mbps`},
+  {id:"cutty",name:"Premier Resort Cutty Sark",area:"Scottburgh",img:"https://cf.bstatic.com/xdata/images/hotel/max1024x768/307765429.jpg?w=800",cost:"R1200–R1400 pp",details:`<strong>Peak surcharge:</strong> +65% • <strong>Min stay:</strong> 3 nights<br><strong>Availability:</strong> Still open<br><strong>Crowds/noise:</strong> Gala dinner crowd<br><strong>Traffic:</strong> N2 2hr delay<br><strong>Safety:</strong> Hotel security<br><strong>NYE programme:</strong> Gala buffet R200pp optional<br><strong>Load shedding:</strong> Full generator<br><strong>Water:</strong> Municipal<br><strong>Wi-Fi:</strong> 50Mbps`},
+  {id:"margate-penthouse",name:"Margate Beachfront Penthouse",area:"Margate",img:"https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=800&fit=crop",cost:"R1250–R1400 pp",details:`<strong>Peak surcharge:</strong> +90% • <strong>Min stay:</strong> 3 nights<br><strong>Availability:</strong> Still open<br><strong>Crowds/noise:</strong> Very loud street party<br><strong>Traffic:</strong> N2 4hr+<br><strong>Safety:</strong> Boom gates + 24hr guard<br><strong>NYE programme:</strong> Walk to free street party<br><strong>Load shedding:</strong> Inverter lights/Wi-Fi<br><strong>Water:</strong> Municipal<br><strong>Wi-Fi:</strong> 50Mbps fibre`},
+  {id:"umdloti",name:"Umdloti Tidal Pool House",area:"Umdloti (North Coast)",img:"https://images.unsplash.com/photo-1582268613079-4b9b2f1c2d3e?w=800&fit=crop",cost:"R1200–R1350 pp",details:`<strong>Peak surcharge:</strong> +75% • <strong>Min stay:</strong> 2 nights OK<br><strong>Availability:</strong> Still open<br><strong>Crowds/noise:</strong> Busy family beach, quiet house<br><strong>Traffic:</strong> N2 north 1–3hr<br><strong>Safety:</strong> Gated estate<br><strong>NYE programme:</strong> Private braai<br><strong>Load shedding:</strong> Full solar backup<br><strong>Water:</strong> Borehole<br><strong>Wi-Fi:</strong> 50Mbps`},
+  {id:"driftwood",name:"Driftwood Cottage",area:"Trafalgar",img:"https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&fit=crop",cost:"R1150–R1300 pp",details:`<strong>Peak surcharge:</strong> +50% • <strong>Min stay:</strong> 3 nights<br><strong>Availability:</strong> Still open<br><strong>Crowds/noise:</strong> Super peaceful secret cove<br><strong>Traffic:</strong> Almost none<br><strong>Safety:</strong> Very safe<br><strong>NYE programme:</strong> Private braai<br><strong>Load shedding:</strong> Partial inverter<br><strong>Water:</strong> Borehole<br><strong>Wi-Fi:</strong> Basic`},
+  {id:"bluelagoon",name:"Ramsgate Blue Lagoon Chalets",area:"Ramsgate",img:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&fit=crop",cost:"R1300–R1400 pp",details:`<strong>Peak surcharge:</strong> +70% • <strong>Min stay:</strong> 3 nights<br><strong>Availability:</strong> Still open<br><strong>Crowds/noise:</strong> Loud beach party<br><strong>Traffic:</strong> N2 3hr<br><strong>Safety:</strong> Lifeguards + security<br><strong>NYE programme:</strong> Carvery R150pp optional<br><strong>Load shedding:</strong> Generator for bar/Wi-Fi<br><strong>Water:</strong> Municipal<br><strong>Wi-Fi:</strong> 50Mbps`}
+];
 
-    const places = [
-        {id:"mantis",name:"Mantis & Moon Backpackers",area:"Umzumbe",img:"https://images.squarespace-cdn.com/content/v1/5d8f8c2e8f2b2b7e7e7e7e7e/1571749493000-ABC123/mantis-moon.jpg?format=750w",cost:"R1200–R1350 pp",details:"Peak +60% • 3-night min • Loud party • Hot tub • Bonfire/DJ free • Inverter • Borehole"},
-        {id:"spot",name:"The Spot Backpackers",area:"Margate",img:"https://images.squarespace-cdn.com/content/v1/5e5e5e5e5e5e5e5e5e5e5e/123456789/spot-beach.jpg?format=750w",cost:"R1150–R1300 pp",details:"Peak +70% • 2-night OK • Street party • Direct beach • Free fireworks • Lights inverter"},
-        {id:"umkobi",name:"Umkobi Lodge",area:"Southbroom",img:"https://images.unsplash.com/photo-1582719478250-c89af9d8c66b?w=800&fit=crop",cost:"R1250–R1400 pp",details:"Peak +50% • Quiet lagoon • Solar backup • Borehole • Very peaceful"},
-        {id:"santorini",name:"Santorini Village",area:"Ramsgate",img:"https://cf.bstatic.com/xdata/images/hotel/max1024x768/448273217.jpg?k=0f3&w=800&h=600",cost:"R1300–R1400 pp",details:"Peak +80% • 4-night min • Loud beach party • 24hr security • Pool"},
-        {id:"happy",name:"Happy Wanderers Resort",area:"Illovo",img:"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/2f/7c/0e/happy-wanderers-beachfront.jpg?w=800",cost:"R1200–R1350 pp",details:"Peak +55% • On-site restaurant • NYE party • Full generator"},
-        {id:"cutty",name:"Premier Resort Cutty Sark",area:"Scottburgh",img:"https://cf.bstatic.com/xdata/images/hotel/max1024x768/307765429.jpg?k=abc&w=800",cost:"R1200–R1400 pp",details:"Peak +65% • Gala dinner • Full generator • Ocean views"},
-        {id:"margate-penthouse",name:"Margate Beachfront Penthouse",area:"Margate",img:"https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=800&fit=crop",cost:"R1250–R1400 pp",details:"Peak +90% • Top-floor sea view • Walk to everything • Gas braai"},
-        {id:"umdloti",name:"Umdloti Tidal Pool House",area:"Umdloti",img:"https://images.unsplash.com/photo-1582268613079-4b9b2f1c2d3e?w=800&fit=crop",cost:"R1200–R1350 pp",details:"Private pool • Tidal pool • Full solar • Borehole"},
-        {id:"driftwood",name:"Driftwood Cottage",area:"Trafalgar",img:"https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&fit=crop",cost:"R1150–R1300 pp",details:"Super quiet • Secret cove • Partial inverter"},
-        {id:"bluelagoon",name:"Ramsgate Blue Lagoon Chalets",area:"Ramsgate",img:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&fit=crop",cost:"R1300–R1400 pp",details:"On-site bar • Loud NYE • Generator • Blue Flag beach"}
-    ];
+const cont = document.getElementById('destinations');
+places.forEach(p => {
+    cont.innerHTML += `
+        <div class="card">
+            <img src="${p.img}" alt="${p.name}" loading="lazy">
+            <h2>${p.name}<br><small>${p.area}</small></h2>
+            <p><strong>${p.cost}</strong></p>
+            <div class="details">${p.details}</div>
+            <button class="vote-btn" data-id="${p.id}">Vote ${p.name}!</button>
+        </div>`;
+});
 
-    const cont = document.getElementById('destinations');
+document.addEventListener('click', async e => {
+    if (e.target.classList.contains('vote-btn')) {
+        if (localStorage.getItem('kzn-voted')) { alert('One vote per person — thank you!'); return; }
+        const id = e.target.dataset.id;
+        await set(ref(db, 'votes/' + Date.now()), id);
+        localStorage.setItem('kzn-voted', 'true');
+        e.target.textContent = 'Voted!';
+        e.target.classList.add('voted');
+        confetti();
+        document.getElementById('thanks').style.display = 'flex';
+        setTimeout(() => document.getElementById('thanks').style.display = 'none', 3200);
+    }
+});
+
+function updateResults() {
+    const c = document.getElementById('progress-container');
+    c.innerHTML = '';
     places.forEach(p => {
-        cont.innerHTML += `
-            <div class="card">
-                <img src="${p.img}" alt="${p.name}" loading="lazy">
-                <h2>${p.name}<br><small>${p.area}</small></h2>
-                <p><strong>${p.cost}</strong><br>${p.details}</p>
-                <button class="vote-btn" data-id="${p.id}">Vote ${p.name}!</button>
-            </div>`;
+        const count = Object.values(votes).filter(v => v === p.id).length;
+        const pct = total ? Math.round(count/total*100) : 0;
+        c.innerHTML += `<p><strong>${p.name}</strong> — ${count} votes</p><div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>`;
     });
+}
 
-    document.addEventListener('click', async e => {
-        if (e.target.classList.contains('vote-btn')) {
-            if (localStorage.getItem('kzn-voted')) { alert('One vote per person — thank you!'); return; }
-            const id = e.target.dataset.id;
-            await set(ref(db, 'votes/' + Date.now()), id);
-            localStorage.setItem('kzn-voted', 'true');
-            e.target.textContent = 'Voted!';
-            e.target.classList.add('voted');
-            confetti();
-            document.getElementById('thanks').style.display = 'flex';
-            setTimeout(() => document.getElementById('thanks').style.display = 'none', 3200);
-        }
-    });
+document.getElementById('share').onclick = e => {
+    e.preventDefault();
+    navigator.clipboard.writeText(location.href);
+    e.target.textContent = 'Copied!';
+    setTimeout(() => e.target.textContent = 'Copy Share Link', 2000);
+};
 
-    function updateResults() {
-        const c = document.getElementById('progress-container');
-        c.innerHTML = '';
-        places.forEach(p => {
-            const count = Object.values(votes).filter(v => v === p.id).length;
-            const pct = total ? Math.round(count/total*100) : 0;
-            c.innerHTML += `<p><strong>${p.name}</strong> — ${count} votes</p>
-                <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>`;
-        });
-    }
+function confetti() {
+    const c = document.getElementById('confetti');
+    const ctx = c.getContext('2d');
+    c.width = innerWidth; c.height = innerHeight;
+    const p = [];
+    for(let i=0;i<200;i++) p.push({x:Math.random()*c.width,y:-20,vx:(Math.random()-0.5)*10,vy:Math.random()*8+5,c:`hsl(${Math.random()*360},80%,60%)`});
+    const draw = () => { ctx.clearRect(0,0,c.width,c.height); p.forEach(a=>{a.x+=a.vx;a.y+=a.vy;a.vy+=0.2;ctx.fillStyle=a.c;ctx.fillRect(a.x,a.y,10,20)}); if(p.some(a=>a.y<c.height)) requestAnimationFrame(draw); };
+    draw();
+}
 
-    document.getElementById('share').onclick = e => {
-        e.preventDefault();
-        navigator.clipboard.writeText(location.href);
-        e.target.textContent = 'Copied!';
-        setTimeout(() => e.target.textContent = 'Copy Share Link', 2000);
-    };
-
-    function confetti() {
-        const c = document.getElementById('confetti');
-        const ctx = c.getContext('2d');
-        c.width = innerWidth; c.height = innerHeight;
-        const p = [];
-        for(let i=0;i<200;i++) p.push({x:Math.random()*c.width,y:-20,s:Math.random()*6+4,vx:(Math.random()-0.5)*10,vy:Math.random()*8+5,c:`hsl(${Math.random()*360},80%,60%)`});
-        const draw = () => {
-            ctx.clearRect(0,0,c.width,c.height);
-            p.forEach(a=>{a.x+=a.vx;a.y+=a.vy;a.vy+=0.2;ctx.fillStyle=a.c;ctx.fillRect(a.x,a.y,10,20)});
-            if(p.some(a=>a.y<c.height)) requestAnimationFrame(draw);
-        };
-        draw();
-    }
-
-    updateResults();
+updateResults();
 </script>
 </body>
 </html>
