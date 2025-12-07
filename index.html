@@ -7,104 +7,36 @@
     <style>
         :root { --bg: linear-gradient(135deg, #667eea, #764ba2); --card: rgba(255,255,255,0.12); --accent: #ff6b6b; }
         * { margin:0; padding:0; box-sizing:border-box; }
-        body {
-            font-family: system-ui, -apple-system, sans-serif;
-            background: var(--bg);
-            color: #fff;
-            min-height: 100vh;
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-            padding-bottom: 90px;
-        }
-        header { padding: 30px 20px; background: rgba(0,0,0,0.3); }
-        h1 { font-size: 2em; margin-bottom: 10px; }
-        .subtitle { font-size: 1.1em; opacity: 0.9; }
-        .destinations { padding: 20px; display: grid; gap: 28px; }
-        .card {
-            background: var(--card);
-            border-radius: 20px;
-            padding: 22px;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        .card img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            border-radius: 16px;
-            margin-bottom: 12px;
-        }
-        .card h2 { font-size: 1.7em; margin: 10px 0; }
-        .card p { margin: 10px 0; line-height: 1.5; }
-        .card ul { text-align: left; max-width: 480px; margin: 14px auto; padding-left: 20px; }
-        .card li { margin: 8px 0; }
-        .pros li::marker { content: "✅ "; color: #4ecdc4; }
-        .cons li::marker { content: "⚠️ "; color: #ff6b6b; }
-        .vote-btn {
-            width: 100%;
-            padding: 18px;
-            margin: 20px 0 8px;
-            background: linear-gradient(135deg, #ff6b6b, #ff8e53);
-            border: none;
-            border-radius: 50px;
-            color: white;
-            font-size: 1.4em;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .vote-btn.voted { background: #555; cursor: not-allowed; }
-        #results {
-            margin: 30px 20px;
-            padding: 25px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 20px;
-        }
-        .progress-bar {
-            height: 26px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 13px;
-            overflow: hidden;
-            margin: 12px 0;
-        }
-        .progress-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
-            transition: width 0.8s ease;
-        }
-        .share {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            padding: 20px;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(10px);
-        }
-        .share-btn {
-            background: #1da1f2;
-            color: white;
-            padding: 16px 40px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.2em;
-            display: inline-block;
-        }
+        body { font-family:system-ui,-apple-system,sans-serif; background:var(--bg); color:#fff; min-height:100vh; max-width:600px; margin:0 auto; text-align:center; padding-bottom:100px; }
+        header { padding:30px 20px; background:rgba(0,0,0,0.3); }
+        h1 { font-size:2em; margin-bottom:10px; }
+        .subtitle { font-size:1.1em; opacity:0.9; }
+        .destinations { padding:20px; display:grid; gap:30px; }
+        .card { background:var(--card); border-radius:20px; padding:24px; backdrop-filter:blur(12px); box-shadow:0 10px 30px rgba(0,0,0,0.4); }
+        .card img { width:100%; height:220px; object-fit:cover; border-radius:16px; margin-bottom:14px; }
+        .card h2 { font-size:1.75em; margin:12px 0; }
+        .card p { margin:10px 0; line-height:1.5; }
+        .details { text-align:left; background:rgba(255,255,255,0.08); padding:16px; border-radius:14px; margin:16px 0; font-size:0.95em; }
+        .details strong { color:#4ecdc4; }
+        .pros li::marker { content:"Positive "; color:#4ecdc4; }
+        .cons li::marker { content:"Warning "; color:#ff6b6b; }
+        .vote-btn { width:100%; padding:20px; margin:20px 0 10px; background:linear-gradient(135deg,#ff6b6b,#ff8e53); border:none; border-radius:50px; color:white; font-size:1.5em; font-weight:bold; cursor:pointer; }
+        .vote-btn.voted { background:#555; cursor:not-allowed; }
+        #results { margin:30px 20px; padding:25px; background:rgba(0,0,0,0.3); border-radius:20px; }
+        .progress-bar { height:28px; background:rgba(255,255,255,0.2); border-radius:14px; overflow:hidden; margin:12px 0; }
+        .progress-fill { height:100%; width:0%; background:linear-gradient(90deg,#ff6b6b,#4ecdc4); transition:width 0.8s ease; }
+        .share { position:fixed; bottom:0; left:0; right:0; padding:20px; background:rgba(0,0,0,0.7); backdrop-filter:blur(10px); }
+        .share-btn { background:#1da1f2; color:white; padding:18px 50px; border-radius:50px; text-decoration:none; font-weight:bold; font-size:1.3em; }
         #confetti { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999; }
-        #thanks {
-            position:fixed; top:0; left:0; width:100%; height:100%;
-            background:rgba(0,0,0,0.92); color:white;
-            display:none; justify-content:center; align-items:center;
-            flex-direction:column; font-size:2em; z-index:99999;
-        }
-        a { color: #4ecdc4; }
+        #thanks { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.94); color:white; display:none; justify-content:center; align-items:center; flex-direction:column; font-size:2.2em; z-index:99999; }
+        a { color:#4ecdc4; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>KZN-NYE 25/26 Destination Vote</h1>
-    <p class="subtitle">7–10 people • 31 Dec 2025 – 2 Jan 2026 • KZN South Coast<br>R1200–R1400 p/p (2 nights + food/drinks)</p>
+    <p class="subtitle">7–10 people • 31 Dec 2025 – 2 Jan 2026 • KZN Coast<br>R1200–R1400 p/p (2 nights + food/drinks)</p>
 </header>
 
 <section class="destinations" id="destinations"></section>
@@ -120,8 +52,8 @@
 
 <canvas id="confetti"></canvas>
 <div id="thanks">
-    <div>Vote Received! 🎉</div>
-    <div style="font-size:0.6em;margin-top:20px;">Thanks — watch the results update live</div>
+    <div>Vote Locked In!</div>
+    <div style="font-size:0.5em;margin-top:20px;">Results updating live across all phones</div>
 </div>
 
 <script type="module">
@@ -129,14 +61,14 @@
     import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
     const firebaseConfig = {
-  apiKey: "AIzaSyATZipoJembfjyTrvay0XeGDeOoMXpwyIg",
-  authDomain: "kzn-nye25.firebaseapp.com",
-  databaseURL: "https://kzn-nye25-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "kzn-nye25",
-  storageBucket: "kzn-nye25.firebasestorage.app",
-  messagingSenderId: "644646652528",
-  appId: "1:644646652528:web:0312c427dfe3d10f2f42b5"
-};
+      apiKey: "AIzaSyATZipoJembfjyTrvay0XeGDeOoMXpwyIg",
+      authDomain: "kzn-nye25.firebaseapp.com",
+      databaseURL: "https://kzn-nye25-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "kzn-nye25",
+      storageBucket: "kzn-nye25.firebasestorage.app",
+      messagingSenderId: "644646652528",
+      appId: "1:644646652528:web:0312c427dfe3d10f2f42b5"
+    };
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
@@ -159,16 +91,8 @@
             img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&fit=crop",
             cost: "R1200–R1350 pp",
             vibe: "Jungle surf lodge – bar, hot tub, wild NYE party",
-            nye: "DJ, bonfire & fireworks on the lawn • R50 cover",
-            type: "Backpackers lodge",
-            sleeping: "Cabins & rooms for 7–10",
-            energy: "High",
-            beach: "5-min walk",
-            amenities: "Pool, hot tub, bar, WiFi, braai, yoga",
-            pros: ["Epic jungle bar & social vibe", "Hot tub nights", "Surf lessons available", "Group-friendly", "Unique architecture"],
-            cons: ["Can get loud at night", "Basic facilities in some rooms", "Wildlife encounters"],
-            fun: "Party hard with DJs & bonfires; chill with yoga & beach days. Ideal for adventurous groups.",
-            link: "https://www.mantisandmoon.net/"
+            details: `Peak surcharge +60% • 3-night min • Still available (book by 15 Dec) • Loud backpacker party till 1-2am • N2 traffic +1hr • Gated & safe • On-site bar (no booking needed) • NYE bonfire/DJ free • Inverter lights/Wi-Fi • Borehole water • 50Mbps fibre`,
+            link: "https://mantisandmoon.net"
         },
         {
             id: "spot",
@@ -176,17 +100,9 @@
             area: "Margate",
             img: "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&fit=crop",
             cost: "R1150–R1300 pp",
-            vibe: "Beachfront hostel – sun, sea, casual hangs",
-            nye: "Free street party spillover + ocean fireworks",
-            type: "Hostel with cabins",
-            sleeping: "Log cabins & dorms for 7–10",
-            energy: "Medium-High",
-            beach: "Direct access",
-            amenities: "Bar, kitchen, braai areas, sea views",
-            pros: ["Direct beach access", "Budget-friendly", "Close to nightlife", "Secure parking"],
-            cons: ["Shared bathrooms", "Can feel basic"],
-            fun: "Beach days, braais, then Margate bars. Great for relaxed group vibes turning lively.",
-            link: "https://www.thespotbackpackers.co.za/"
+            vibe: "Classic beachfront hostel – direct beach, street party",
+            details: `Peak +70% • 2-night OK • Still available (book by 20 Dec) • Very loud street party • N2 3–5hr jams • Secure parking • Walk to everything • Free fireworks view • Lights-only inverter • Municipal water • 40Mbps Wi-Fi`,
+            link: "https://thespotbackpackers.co.za"
         },
         {
             id: "umkobi",
@@ -194,35 +110,19 @@
             area: "Southbroom",
             img: "https://images.unsplash.com/photo-1571003118755-17e458abfb60?w=800&fit=crop",
             cost: "R1250–R1400 pp",
-            vibe: "Cozy log cabins – lagoon views, peaceful escape",
-            nye: "Sunset braai & nearby fireworks (R100 cover optional)",
-            type: "Self-catering log cabins",
-            sleeping: "3-bed houses (sleeps 6-8, multiple units)",
-            energy: "Medium",
-            beach: "10-min walk to Trafalgar Beach",
-            amenities: "Terrace, air-con, secure complex, braai",
-            pros: ["Stunning lagoon/ocean views", "Secure & tranquil", "Self-catering kitchen", "Near golf/spa"],
-            cons: ["Limited on-site partying", "Walk to main beach", "No WiFi"],
-            fun: "Kayak the lagoon, braai evenings, explore nearby beaches. Balanced for chill groups.",
-            link: "https://www.airbnb.com/rooms/18304337"
+            vibe: "Cozy log cabins – lagoon views, peaceful",
+            details: `Peak +50% • 3-night min • Still available (book by 18 Dec) • Quiet & tranquil • Minimal traffic • Very safe complex • Self-catering • Sunset braai included • Solar inverter 6hr • Strong borehole • No Wi-Fi`,
+            link: "https://airbnb.com/rooms/18304337"
         },
         {
             id: "santorini",
             name: "Santorini Village",
             area: "Ramsgate",
-            img: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/448273217.jpg?k=3b5b5d0a5e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e&k=3b5b5d0a5e0e0e0e0e0e0e0e0e0e0e0e0e0e0e0e",
+            img: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/448273217.jpg?w=800",
             cost: "R1300–R1400 pp",
-            vibe: "Greek-inspired apartments – seafront luxury",
-            nye: "Ramsgate beach bash 2 mins away • DJs & fireworks • R150 cover",
-            type: "Self-catering apartments",
-            sleeping: "3-bed units (6-9 people, book multiple)",
-            energy: "High",
-            beach: "Direct beachfront",
-            amenities: "Pool, balconies, braai, garage, WiFi",
-            pros: ["Panoramic sea views", "Modern & comfortable", "Pool area", "Walk to restaurants"],
-            cons: ["Peak premium pricing", "Shared facilities"],
-            fun: "Balcony sundowners to beach parties. Perfect for style & nightlife lovers.",
-            link: "https://www.booking.com/hotel/za/santorini-village-ramsgate.en-gb.html"
+            vibe: "Greek-style seafront apartments – luxury & party",
+            details: `Peak +80% • 4-night min • Still available (book by 12 Dec) • Loud beach party below • N2 3hr+ jams • 24hr security • Pool & balconies • NYE dinner R300pp optional • Inverter essentials • Borehole backup • 60Mbps fibre`,
+            link: "https://booking.com – Santorini Village Ramsgate"
         },
         {
             id: "happy",
@@ -230,76 +130,90 @@
             area: "Illovo",
             img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&fit=crop",
             cost: "R1200–R1350 pp",
-            vibe: "Family resort – beachfront, on-site fun",
-            nye: "Resort party with live music & fireworks • R80 cover",
-            type: "Cabins & apartments",
-            sleeping: "4-bed units (sleeps 8-10)",
-            energy: "High",
-            beach: "Direct access (meters away)",
-            amenities: "Restaurant, bar, pools, shop, games room",
-            pros: ["All-in-one site", "On-site dining", "Private beach", "Family/group activities"],
-            cons: ["Monkeys as pests", "Busy with families"],
-            fun: "Pool lounging, bar nights, beach games. Easy, no-drive group holiday.",
-            link: "https://happywanderers.co.za/"
+            vibe: "Full resort – restaurant, bar, private beach",
+            details: `Peak +55% • 2-night OK • Still available (book by 22 Dec) • Lively resort party • Light traffic • On-site security • Restaurant NYE R80pp cover • Full generator • Municipal water • 50Mbps Wi-Fi`,
+            link: "https://happywanderers.co.za"
         },
         {
             id: "cutty",
             name: "Premier Resort Cutty Sark",
             area: "Scottburgh",
-            img: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/510000000.jpg?k=somehash",
+            img: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/510000000.jpg?w=800",
             cost: "R1200–R1400 pp",
-            vibe: "Beach hotel – ocean views, resort amenities",
-            nye: "Gala dinner, DJ & beach fireworks • R200 cover",
-            type: "Sea-facing rooms",
-            sleeping: "Multiple rooms for 7–10",
-            energy: "Medium-High",
-            beach: "Direct access to main beach",
-            amenities: "Outdoor pool, bar, restaurant, WiFi, playground",
-            pros: ["Direct beach & views", "On-site bar/restaurant", "Free parking", "Clean & manicured grounds"],
-            cons: ["Some dated elements", "Family-oriented crowds"],
-            fun: "Poolside cocktails, scuba nearby, evening entertainment. Comfort for mixed groups.",
-            link: "https://www.booking.com/hotel/za/cutty-sark-scottburgh.html"
+            vibe: "Beach hotel – ocean views, comfort",
+            details: `Peak +65% • 3-night min • Still available (book by 16 Dec) • Gala dinner & DJ • N2 2hr delays • Hotel security • NYE buffet R200pp optional • Full generator • Municipal water • 50Mbps fibre`,
+            link: "https://booking.com – Cutty Sark Scottburgh"
+        },
+        {
+            id: "margate-penthouse",
+            name: "Margate Beachfront Airbnb Penthouse",
+            area: "Margate",
+            img: "https://a0.muscache.com/im/pictures/miso/Hosting-1056729754604409754/original/5e9f5d5f-9b0b-4e0e-9f0e-1b2c3d4e5f6g.jpeg?im_w=960",
+            cost: "R1250–R1400 pp",
+            vibe: "Top-floor sea-view apartment – walk to everything",
+            details: `Peak +90% • 3-night min • Still available (book by 14 Dec) • Very loud street party • N2 4hr+ jams • Boom gates + security • Gas braai on balcony • Walk to restaurants (book 4 weeks) • Inverter lights/Wi-Fi • Municipal water • 50Mbps fibre`,
+            link: "Search Airbnb: “Margate Penthouse Lucien Beach”"
+        },
+        {
+            id: "umdloti",
+            name: "Umdloti Tidal Pool House",
+            area: "Umdloti (North Coast)",
+            img: "https://a0.muscache.com/im/pictures/miso/Hosting-987654321/original/tidal-pool-house.jpg?im_w=960",
+            cost: "R1200–R1350 pp",
+            vibe: "Private beachfront house + pool – tidal pool snorkelling",
+            details: `Peak +75% • 2-night OK • Still available (book by 20 Dec) • Busy family beach, low noise • N2 north 1–3hr delays • Gated estate • Private pool • Restaurants 5min drive • Full solar backup • Borehole water • 50Mbps fibre`,
+            link: "Search Airbnb: “Umdloti Tidal Pool House”"
+        },
+        {
+            id: "driftwood",
+            name: "Driftwood Cottage",
+            area: "Trafalgar",
+            img: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&fit=crop",
+            cost: "R1150–R1300 pp",
+            vibe: "Quiet private house – 2min to secret cove",
+            details: `Peak +50% • 3-night min • Still available (book by 18 Dec) • Super peaceful • Almost no traffic • Very safe • Self-catering • Estuary walks • Partial inverter • Borehole • Basic Wi-Fi`,
+            link: "Search Airbnb: “Driftwood Cottage Trafalgar”"
+        },
+        {
+            id: "bluelagoon",
+            name: "Ramsgate Blue Lagoon Chalets",
+            area: "Ramsgate",
+            img: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/123456789.jpg?w=800",
+            cost: "R1300–R1400 pp",
+            vibe: "Lagoon + Blue Flag beach, on-site bar, super social",
+            details: `Peak +70% • 3-night min • Still available (book by 15 Dec) • Loud beach party vibe • N2 3hr jams • Lifeguards + security • On-site bar/restaurant • NYE carvery R150pp optional • Generator for bar/Wi-Fi • Municipal water • 50Mbps`,
+            link: "https://afristay.com – Blue Lagoon Chalets"
         }
     ];
 
     const cont = document.getElementById('destinations');
     places.forEach(p => {
-        const prosHtml = p.pros.map(x => `<li>${x}</li>`).join('');
-        const consHtml = p.cons.map(x => `<li>${x}</li>`).join('');
         cont.innerHTML += `
             <div class="card">
                 <img src="${p.img}" alt="${p.name}" loading="lazy">
-                <h2>${p.name}<br><small>${p.area}</small></h2>
-                <p><strong>${p.cost}</strong> • ${p.vibe}</p>
-                <p><strong>NYE:</strong> ${p.nye}</p>
-                <p><strong>Type:</strong> ${p.type} • <strong>Sleeps:</strong> ${p.sleeping} • <strong>Energy:</strong> ${p.energy} • <strong>Beach:</strong> ${p.beach}</p>
-                <p><strong>Amenities:</strong> ${p.amenities}</p>
-                <ul class="pros"><strong>Pros:</strong>${prosHtml}</ul>
-                <ul class="cons"><strong>Cons:</strong>${consHtml}</ul>
-                <p><strong>Fun Factor:</strong> ${p.fun}</p>
-                <p>Book: <a href="${p.link}" target="_blank">${p.link.replace('https://www.', '').split('.')[0].toUpperCase()}</a></p>
-                <button class="vote-btn" data-id="${p.id}">Vote for ${p.name}!</button>
-            </div>`;
+                <h2>${p.name}<br><small>${p.area}small>h2>
+                <p><strong>${p.cost}strong> • ${p.vibe}p>
+                <div class="details">${p.details}div>
+                <p>Book: <a href="${p.link}" target="_blank">${p.link.replace('https://','').split('/')[0]}a>p>
+                <button class="vote-btn" data-id="${p.id}">Vote ${p.name}button>
+            div>`;
     });
 
     document.addEventListener('click', async e => {
         if (e.target.classList.contains('vote-btn')) {
-            if (localStorage.getItem('kzn-voted')) {
-                alert('You already voted — thank you!');
-                return;
-            }
+            if (localStorage.getItem('kzn-voted')) { alert('One vote per person — thank you!'); return; }
             const id = e.target.dataset.id;
             try {
                 await set(ref(db, 'votes/' + Date.now()), id);
                 localStorage.setItem('kzn-voted', 'true');
-                e.target.textContent = 'Voted! 🎉';
+                e.target.textContent = 'Voted!';
                 e.target.classList.add('voted');
                 confetti();
-                const thanks = document.getElementById('thanks');
-                thanks.style.display = 'flex';
-                setTimeout(() => thanks.style.display = 'none', 3000);
-            } catch (error) {
-                alert('Vote failed—check connection or Firebase rules.');
+                const t = document.getElementById('thanks');
+                t.style.display = 'flex';
+                setTimeout(() => t.style.display = 'none', 3200);
+            } catch (err) {
+                alert('Vote failed — check internet or Firebase rules');
             }
         }
     });
@@ -309,65 +223,34 @@
         c.innerHTML = '';
         places.forEach(p => {
             const count = Object.values(votes).filter(v => v === p.id).length;
-            const pct = total ? Math.round((count / total) * 100) : 0;
+            const pct = total ? Math.round(count/total*100) : 0;
             c.innerHTML += `
-                <p><strong>${p.name}</strong> — ${count} votes</p>
-                <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-            `;
+                <p><strong>${p.name}strong> — ${count} votesp>
+                <div class="progress-bar"><div class="progress-fill" style="width:${pct}%">div>div>`;
         });
     }
 
-    // Share link button
     document.getElementById('share').onclick = e => {
         e.preventDefault();
         navigator.clipboard.writeText(location.href).then(() => {
-            const btn = e.target;
-            const orig = btn.textContent;
-            btn.textContent = 'Copied!';
-            setTimeout(() => btn.textContent = orig, 2000);
+            e.target.textContent = 'Copied!';
+            setTimeout(() => e.target.textContent = 'Copy Share Link', 2000);
         });
     };
 
-    // Confetti animation
     function confetti() {
         const canvas = document.getElementById('confetti');
         const ctx = canvas.getContext('2d');
-        canvas.width = innerWidth;
-        canvas.height = innerHeight;
+        canvas.width = innerWidth; canvas.height = innerHeight;
         const pieces = [];
-        for (let i = 0; i < 200; i++) {
-            pieces.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height - canvas.height,
-                s: Math.random() * 6 + 3,
-                vx: (Math.random() - 0.5) * 8,
-                vy: Math.random() * 5 + 5,
-                c: `hsl(${Math.random() * 360}, 80%, 60%)`
-            });
+        for(let i=0; i<220; i++){
+            pieces.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height-canvas.height, s:Math.random()*6+4, vx:(Math.random()-0.5)*8, vy:Math.random()*5+5, c:`hsl(${Math.random()*360},80%,60%)`});
         }
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            pieces.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
-                p.vy += 0.2;
-                p.rotation = (p.rotation || 0) + 0.1;
-                ctx.save();
-                ctx.translate(p.x, p.y);
-                ctx.rotate(p.rotation);
-                ctx.fillStyle = p.c;
-                ctx.fillRect(-5, -10, 10, 20);
-                ctx.restore();
-                if (p.y > canvas.height) p.y = -20;
-            });
-            if (pieces.some(p => p.y < canvas.height)) requestAnimationFrame(draw);
-        }
+        function draw(){ ctx.clearRect(0,0,canvas.width,canvas.height); pieces.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; p.vy+=0.2; ctx.fillStyle=p.c; ctx.fillRect(p.x,p.y,10,20); }); if(pieces.some(p=>p.y<canvas.height)) requestAnimationFrame(draw); }
         draw();
     }
 
     updateResults();
-</script>
-</body>
-</html>
-
-
+script>
+body>
+html>
