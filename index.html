@@ -67,7 +67,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+
 const db = getDatabase(app);
 const votesRef = ref(db, 'votes');
 
@@ -144,3 +144,4 @@ updateResults();
 </script>
 </body>
 </html>
+
