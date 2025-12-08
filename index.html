@@ -3,77 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KZN-NYE 25/26 Vote</title>
+<title>KZN-NYE 25/26 Destination Vote</title>
 <style>
-    :root { --bg: linear-gradient(135deg, #667eea, #764ba2); --card: rgba(255,255,255,0.15); --highlight: #4ecdc4; }
+    :root { --bg: linear-gradient(135deg, #667eea, #764ba2); --card: rgba(255,255,255,0.12); }
     * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background:var(--bg); color:#fff; max-width:600px; margin:0 auto; text-align:center; padding-bottom:80px; }
-    
-    header { padding:40px 20px 20px; background:linear-gradient(to bottom, rgba(0,0,0,0.4), transparent); }
-    h1 { font-size:2.2em; letter-spacing:-1px; text-shadow:0 2px 10px rgba(0,0,0,0.3); }
-    .subtitle { font-size:1em; opacity:0.9; margin-top:10px; font-weight:300; line-height:1.4; }
-    
-    .destinations { padding:20px; display:flex; flex-direction:column; gap:25px; }
-    .card { background:var(--card); border-radius:24px; padding:20px; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); box-shadow:0 10px 40px rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.1); transition:transform 0.2s; }
-    .card:active { transform:scale(0.98); }
-    
-    /* Image handling */
-    .img-frame { width:100%; height:180px; overflow:hidden; border-radius:16px; position:relative; background:#333; }
-    .card img { width:100%; height:100%; object-fit:cover; transition:opacity 0.3s; }
-    .card img.error { opacity:0.5; }
-    
-    .card h2 { font-size:1.6em; margin:15px 0 5px; line-height:1.1; }
-    .area { font-size:0.9em; text-transform:uppercase; letter-spacing:1px; opacity:0.8; margin-bottom:10px; display:block; }
-    .price { font-size:1.4em; font-weight:700; color:var(--highlight); margin-bottom:15px; display:block; }
-
-    /* The new condensed grid layout */
-    .specs-grid { display:grid; grid-template-columns: 1fr 1fr; gap:10px; text-align:left; background:rgba(0,0,0,0.2); padding:15px; border-radius:12px; margin-bottom:20px; font-size:0.85em; }
-    .spec-item { display:flex; flex-direction:column; }
-    .spec-label { opacity:0.6; font-size:0.8em; margin-bottom:2px; }
-    .spec-val { font-weight:500; }
-    .spec-val.bad { color:#ff6b6b; }
-    .spec-val.good { color:#6bff8e; }
-
-    .vote-btn { width:100%; padding:18px; background:linear-gradient(135deg,#ff6b6b,#ff8e53); border:none; border-radius:50px; color:white; font-size:1.2em; font-weight:800; text-transform:uppercase; cursor:pointer; box-shadow:0 4px 15px rgba(255, 107, 107, 0.4); }
-    .vote-btn.voted { background:#555; box-shadow:none; cursor:default; opacity:0.7; }
-    
-    #results { margin:20px; padding:25px; background:rgba(0,0,0,0.25); border-radius:24px; }
-    .progress-bar { height:12px; background:rgba(255,255,255,0.1); border-radius:6px; overflow:hidden; margin:8px 0 20px; }
-    .progress-fill { height:100%; background:var(--highlight); transition:width 1s cubic-bezier(0.4, 0, 0.2, 1); }
-    
-    .share { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); z-index:100; }
-    .share-btn { background:#1da1f2; color:white; padding:12px 30px; border-radius:50px; text-decoration:none; font-weight:bold; box-shadow:0 5px 20px rgba(0,0,0,0.3); display:block; white-space:nowrap; }
-    
+    body { font-family:system-ui,-apple-system,sans-serif; background:var(--bg); color:#fff; max-width:600px; margin:0 auto; text-align:center; padding-bottom:100px; }
+    header { padding:30px 20px; background:rgba(0,0,0,0.3); }
+    h1 { font-size:2em; }
+    .subtitle { font-size:1.1em; opacity:0.9; margin-top:8px; }
+    .destinations { padding:20px; display:grid; gap:32px; }
+    .card { background:var(--card); border-radius:20px; padding:24px; backdrop-filter:blur(12px); box-shadow:0 10px 30px rgba(0,0,0,0.4); }
+    .card img { width:100%; height:220px; object-fit:cover; border-radius:16px; }
+    .card h2 { font-size:1.75em; margin:14px 0 8px; }
+    .details { text-align:left; background:rgba(255,255,255,0.08); padding:18px; border-radius:14px; margin:18px 0; line-height:1.6; font-size:0.97em; }
+    .details strong { color:#4ecdc4; }
+    .vote-btn { width:100%; padding:20px; margin:20px 0 8px; background:linear-gradient(135deg,#ff6b6b,#ff8e53); border:none; border-radius:50px; color:white; font-size:1.5em; font-weight:bold; cursor:pointer; }
+    .vote-btn.voted { background:#555; cursor:not-allowed; }
+    #results { margin:30px 20px; padding:25px; background:rgba(0,0,0,0.3); border-radius:20px; }
+    .progress-bar { height:28px; background:rgba(255,255,255,0.2); border-radius:14px; overflow:hidden; margin:12px 0; }
+    .progress-fill { height:100%; background:linear-gradient(90deg,#ff6b6b,#4ecdc4); transition:width 0.8s ease; }
+    .share { position:fixed; bottom:0; left:0; right:0; padding:20px; background:rgba(0,0,0,0.7); backdrop-filter:blur(10px); }
+    .share-btn { background:#1da1f2; color:white; padding:18px 50px; border-radius:50px; text-decoration:none; font-weight:bold; font-size:1.3em; }
     #confetti { position:fixed; inset:0; pointer-events:none; z-index:9999; }
-    #thanks { position:fixed; inset:0; background:rgba(0,0,0,0.92); color:white; display:none; justify-content:center; align-items:center; flex-direction:column; z-index:99999; opacity:0; transition:opacity 0.3s; }
-    #thanks.show { opacity:1; }
+    #thanks { position:fixed; inset:0; background:rgba(0,0,0,0.94); color:white; display:none; justify-content:center; align-items:center; flex-direction:column; font-size:2.2em; z-index:99999; }
 </style>
 </head>
 <body>
 
 <header>
-    <h1>KZN NYE 25/26 🇿🇦</h1>
-    <p class="subtitle">7–10 Pax • 2 Nights • Dec 31 - Jan 2<br>Budget: R1200–R1400 pp</p>
+    <h1>KZN-NYE 25/26 Destination Vote</h1>
+    <p class="subtitle">7–10 people • 31 Dec 2025 – 2 Jan 2026 • KZN Coast<br>R1200–R1400 pp (2 nights + food/drinks)</p>
 </header>
 
-<div id="results">
-    <h2>🏆 Live Standings</h2>
-    <div id="progress-container">loading...</div>
-</div>
+<section class="dest" id="destinations"></section>
 
-<section class="destinations" id="destinations"></section>
+<section id="results">
+    <h2>Live Results</h2>
+    <div id="progress-container"></div>
+</section>
 
-<div class="share"><a href="#" id="share" class="share-btn">🔗 Copy Group Link</a></div>
+<div class="share"><a href="#" id="share" class="share-btn">Copy Share Link</a></div>
 
 <canvas id="confetti"></canvas>
-<div id="thanks">
-    <h1 style="font-size:3em">VOTED!</h1>
-    <p>Results updating...</p>
-</div>
+<div id="thanks"><div>Vote Locked In!</div><div style="font-size:0.5em;margin-top:20px;">Results updating live</div></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, onValue, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -95,187 +71,76 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const votesRef = ref(db, 'votes');
 
-let votes = {}; 
-let total = 0;
+let votes = {}; let total = 0;
+onValue(votesRef, s => { votes = s.val() || {}; total = Object.values(votes).filter(v=>v).length; updateResults(); });
 
-// Listen for votes
-onValue(votesRef, s => { 
-    votes = s.val() || {}; 
-    total = Object.values(votes).length; // Push creates unique IDs, so we just count keys
-    updateResults(); 
-});
-
-// Data: Condensed for readability
 const places = [
-  {
-    id:"mantis", name:"Mantis & Moon", area:"Umzumbe", cost:"R1200", 
-    img:"https://images.squarespace-cdn.com/content/v1/5d8f8c2e8f2b2b7e7e7e7e7e/1571749493000-8X7X7X7X7X7X/mantis.jpg?format=750w",
-    specs: [
-        {l:"Vibe", v:"Wild Party 🥳", c:"good"},
-        {l:"Water", v:"Borehole ✅", c:"good"},
-        {l:"Power", v:"Lights Only ⚠️", c:"bad"},
-        {l:"Traffic", v:"+1hr Delay", c:""}
-    ]
-  },
-  {
-    id:"spot", name:"The Spot", area:"Margate", cost:"R1150", 
-    img:"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/3b/2c/caption.jpg?w=800",
-    specs: [
-        {l:"Vibe", v:"Street Bash 🔊", c:"good"},
-        {l:"Water", v:"Municipal 💧", c:""},
-        {l:"Power", v:"Inverter 💡", c:""},
-        {l:"Traffic", v:"Nightmare 🚗", c:"bad"}
-    ]
-  },
-  {
-    id:"umkobi", name:"Umkobi Lodge", area:"Southbroom", cost:"R1250", 
-    img:"https://a0.muscache.com/im/pictures/miso/Hosting-18304337/original/12345.jpg?im_w=720",
-    specs: [
-        {l:"Vibe", v:"Chill Braai 🥩", c:"good"},
-        {l:"Water", v:"Borehole ✅", c:"good"},
-        {l:"Power", v:"Solar (6hr) 🔋", c:"good"},
-        {l:"Traffic", v:"Clear ✅", c:"good"}
-    ]
-  },
-  {
-    id:"santorini", name:"Santorini Village", area:"Ramsgate", cost:"R1300", 
-    img:"https://cf.bstatic.com/xdata/images/hotel/max1024x768/448273217.jpg?w=800",
-    specs: [
-        {l:"Vibe", v:"Beach Party 🏖️", c:"good"},
-        {l:"Water", v:"Borehole ✅", c:"good"},
-        {l:"Power", v:"Essentials Only", c:""},
-        {l:"Traffic", v:"+3hr Delay", c:"bad"}
-    ]
-  },
-  {
-    id:"happy", name:"Happy Wanderers", area:"Illovo", cost:"R1200", 
-    img:"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/2f/7c/0e/happy-wanderers.jpg?w=800",
-    specs: [
-        {l:"Vibe", v:"Resort Fun 🎸", c:"good"},
-        {l:"Water", v:"Municipal 💧", c:""},
-        {l:"Power", v:"Full Gen ⚡", c:"good"},
-        {l:"Traffic", v:"Light ✅", c:"good"}
-    ]
-  },
-  {
-    id:"umdloti", name:"Umdloti House", area:"North Coast", cost:"R1250", 
-    img:"https://images.unsplash.com/photo-1582268613079-4b9b2f1c2d3e?w=800&fit=crop",
-    specs: [
-        {l:"Vibe", v:"Private House 🏠", c:"good"},
-        {l:"Water", v:"Borehole ✅", c:"good"},
-        {l:"Power", v:"Full Solar ☀️", c:"good"},
-        {l:"Traffic", v:"Moderate", c:""}
-    ]
-  }
+  {id:"mantis",name:"Mantis & Moon Backpackers",area:"Umzumbe",img:"https://images.squarespace-cdn.com/content/v1/5d8f8c2e8f2b2b7e7e7e7e7e/1571749493000-8X7X7X7X7X7X/mantis.jpg?format=750w",cost:"R1200–R1350 pp",details:`<strong>Peak surcharge:</strong> +60% • <strong>Min stay:</strong> 3 nights<br><strong>Availability:</strong> Still open (book by 15 Dec)<br><strong>Crowds/noise:</strong> Loud backpacker party till 1–2am<br><strong>Traffic:</strong> N2 +1hr delay<br><strong>Safety:</strong> Gated, night patrols<br><strong>NYE programme:</strong> Free bonfire + DJ<br><strong>Load shedding:</strong> Inverter lights/Wi-Fi<br><strong>Water:</strong> Borehole backup<br><strong>Wi-Fi:</strong> 50Mbps fibre`},
+  {id:"spot",name:"The Spot Backpackers",area:"Margate",img:"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/f6/3b/2c/caption.jpg?w=800",cost:"R1150–R1300 pp",details:`<strong>Peak surcharge:</strong> +70% • <strong>Min stay:</strong> 2 nights OK<br><strong>Availability:</strong> Still open (book by 20 Dec)<br><strong>Crowds/noise:</strong> Very loud street party<br><strong>Traffic:</strong> N2 3–5hr jams<br><strong>Safety:</strong> Secure parking + boom<br><strong>NYE programme:</strong> Free fireworks view<br><strong>Load shedding:</strong> Lights-only inverter<br><strong>Water:</strong> Municipal reliable<br><strong>Wi-Fi:</strong> 40Mbps`},
+  {id:"umkobi",name:"Umkobi Lodge",area:"Southbroom",img:"https://a0.muscache.com/im/pictures/miso/Hosting-18304337/original/12345.jpg?im_w=720",cost:"R1250–R1400 pp",details:`<strong>Peak surcharge:</strong> +50% • <strong>Min stay:</strong> 3 nights<br><strong>Availability:</strong> Still open<br><strong>Crowds/noise:</strong> Very peaceful<br><strong>Traffic:</strong> Minimal<br><strong>Safety:</strong> Secure complex<br><strong>NYE programme:</strong> Sunset braai included<br><strong>Load shedding:</strong> Solar 6hr backup<br><strong>Water:</strong> Strong borehole<br><strong>Wi-Fi:</strong> None (mobile data)`},
+  {id:"santorini",name:"Santorini Village",area:"Ramsgate",area:"Ramsgate",img:"https://cf.bstatic.com/xdata/images/hotel/max1024x768/448273217.jpg?w=800",cost:"R1300–R1400 pp",details:`<strong>Peak surcharge:</strong> +80% • <strong> 4 nights min<br><strong>Availability:</strong> Still open (book ASAP)<br><strong>Crowds/noise:</strong> Loud beach party below<br><strong>Traffic:</strong> N2 3hr+<br><strong>Safety:</strong> 24hr security<br><strong>NYE programme:</strong> Optional dinner R300pp<br><strong>Load shedding:</strong> Inverter essentials<br><strong>Water:</strong> Borehole<br><strong>Wi-Fi:</strong> 60Mbps fibre`},
+  {id:"happy",name:"Happy Wanderers Resort",area:"Illovo",img:"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/2f/7c/0e/happy-wanderers.jpg?w=800",cost:"R1200–R1350 pp",details:`<strong>Peak surcharge:</strong> +55% • <strong>Min stay:</strong> 2 nights OK<br><strong>Availability:</strong> Still open<br><strong>Crowds/noise:</strong> Lively resort party<br><strong>Traffic:</strong> Light<br><strong>Safety:</strong> On-site security<br><strong>NYE programme:</strong> Live music + fireworks R80pp<br><strong>Load shedding:</strong> Full generator<br><strong>Water:</strong> Municipal<br><strong>Wi-Fi:</strong> 50Mbps`},
+  {id:"cutty",name:"Premier Resort Cutty Sark",area:"Scottburgh",img:"https://cf.bstatic.com/xdata/images/hotel/max1024x768/307765429.jpg?w=800",cost:"R1200–R1400 pp",details:`<strong>Peak surcharge:</strong> +65% • <strong>Min stay:</strong> 3 nights<br><strong>Availability:</strong> Still open<br><strong>Crowds/noise:</strong> Gala dinner crowd<br><strong>Traffic:</strong> N2 2hr delay<br><strong>Safety:</strong> Hotel security<br><strong>NYE programme:</strong> Gala buffet R200pp optional<br><strong>Load shedding:</strong> Full generator<br><strong>Water:</strong> Municipal<br><strong>Wi-Fi:</strong> 50Mbps`},
+  {id:"margate-penthouse",name:"Margate Beachfront Penthouse",area:"Margate",img:"https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=800&fit=crop",cost:"R1250–R1400 pp",details:`<strong>Peak surcharge:</strong> +90% • <strong>Min stay:</strong> 3 nights<br><strong>Availability:</strong> Still open<br><strong>Crowds/noise:</strong> Very loud street party<br><strong>Traffic:</strong> N2 4hr+<br><strong>Safety:</strong> Boom gates + 24hr guard<br><strong>NYE programme:</strong> Walk to free street party<br><strong>Load shedding:</strong> Inverter lights/Wi-Fi<br><strong>Water:</strong> Municipal<br><strong>Wi-Fi:</strong> 50Mbps fibre`},
+  {id:"umdloti",name:"Umdloti Tidal Pool House",area:"Umdloti (North Coast)",img:"https://images.unsplash.com/photo-1582268613079-4b9b2f1c2d3e?w=800&fit=crop",cost:"R1200–R1350 pp",details:`<strong>Peak surcharge:</strong> +75% • <strong>Min stay:</strong> 2 nights OK<br><strong>Availability:</strong> Still open<br><strong>Crowds/noise:</strong> Busy family beach, quiet house<br><strong>Traffic:</strong> N2 north 1–3hr<br><strong>Safety:</strong> Gated estate<br><strong>NYE programme:</strong> Private braai<br><strong>Load shedding:</strong> Full solar backup<br><strong>Water:</strong> Borehole<br><strong>Wi-Fi:</strong> 50Mbps`},
+  {id:"driftwood",name:"Driftwood Cottage",area:"Trafalgar",img:"https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&fit=crop",cost:"R1150–R1300 pp",details:`<strong>Peak surcharge:</strong> +50% • <strong>Min stay:</strong> 3 nights<br><strong>Availability:</strong> Still open<br><strong>Crowds/noise:</strong> Super peaceful secret cove<br><strong>Traffic:</strong> Almost none<br><strong>Safety:</strong> Very safe<br><strong>NYE programme:</strong> Private braai<br><strong>Load shedding:</strong> Partial inverter<br><strong>Water:</strong> Borehole<br><strong>Wi-Fi:</strong> Basic`},
+  {id:"bluelagoon",name:"Ramsgate Blue Lagoon Chalets",area:"Ramsgate",img:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&fit=crop",cost:"R1300–R1400 pp",details:`<strong>Peak surcharge:</strong> +70% • <strong>Min stay:</strong> 3 nights<br><strong>Availability:</strong> Still open<br><strong>Crowds/noise:</strong> Loud beach party<br><strong>Traffic:</strong> N2 3hr<br><strong>Safety:</strong> Lifeguards + security<br><strong>NYE programme:</strong> Carvery R150pp optional<br><strong>Load shedding:</strong> Generator for bar/Wi-Fi<br><strong>Water:</strong> Municipal<br><strong>Wi-Fi:</strong> 50Mbps`}
 ];
 
-// Render
 const cont = document.getElementById('destinations');
 places.forEach(p => {
-    let specsHTML = '';
-    p.specs.forEach(s => {
-        specsHTML += `<div class="spec-item"><span class="spec-label">${s.l}</span><span class="spec-val ${s.c}">${s.v}</span></div>`;
-    });
-
     cont.innerHTML += `
         <div class="card">
-            <div class="img-frame"><img src="${p.img}" alt="${p.name}" onerror="this.classList.add('error')"></div>
-            <h2>${p.name}</h2>
-            <span class="area">${p.area}</span>
-            <span class="price">${p.cost} pp</span>
-            <div class="specs-grid">${specsHTML}</div>
-            <button class="vote-btn" data-id="${p.id}">Vote Here</button>
+            <img src="${p.img}" alt="${p.name}" loading="lazy">
+            <h2>${p.name}<br><small>${p.area}</small></h2>
+            <p><strong>${p.cost}</strong></p>
+            <div class="details">${p.details}</div>
+            <button class="vote-btn" data-id="${p.id}">Vote ${p.name}!</button>
         </div>`;
 });
 
-// Voting Logic (Fixed with push)
 document.addEventListener('click', async e => {
     if (e.target.classList.contains('vote-btn')) {
-        if (localStorage.getItem('kzn-voted')) { alert('You already voted!'); return; }
-        
+        if (localStorage.getItem('kzn-voted')) { alert('One vote per person — thank you!'); return; }
         const id = e.target.dataset.id;
-        const newRef = push(votesRef); // Create unique key
-        await set(newRef, id);
-        
+        await set(ref(db, 'votes/' + Date.now()), id);
         localStorage.setItem('kzn-voted', 'true');
-        e.target.textContent = 'Voted';
+        e.target.textContent = 'Voted!';
         e.target.classList.add('voted');
-        
-        // UI FX
         confetti();
-        const thanks = document.getElementById('thanks');
-        thanks.style.display = 'flex';
-        requestAnimationFrame(() => thanks.classList.add('show'));
-        setTimeout(() => {
-            thanks.classList.remove('show');
-            setTimeout(() => thanks.style.display = 'none', 300);
-        }, 2500);
+        document.getElementById('thanks').style.display = 'flex';
+        setTimeout(() => document.getElementById('thanks').style.display = 'none', 3200);
     }
 });
 
-// Update Results Bar
 function updateResults() {
     const c = document.getElementById('progress-container');
     c.innerHTML = '';
-    
-    // Sort by vote count desc
-    const sorted = [...places].sort((a,b) => {
-        const cA = Object.values(votes).filter(v => v === a.id).length;
-        const cB = Object.values(votes).filter(v => v === b.id).length;
-        return cB - cA;
-    });
-
-    sorted.forEach(p => {
+    places.forEach(p => {
         const count = Object.values(votes).filter(v => v === p.id).length;
-        if(count === 0) return; // Hide zero votes to save space? Or keep to show options.
         const pct = total ? Math.round(count/total*100) : 0;
-        
-        c.innerHTML += `
-            <div style="display:flex;justify-content:space-between;font-size:0.9em;">
-                <strong>${p.name}</strong>
-                <span>${count} votes</span>
-            </div>
-            <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-        `;
+        c.innerHTML += `<p><strong>${p.name}</strong> — ${count} votes</p><div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>`;
     });
-    
-    if(total === 0) c.innerHTML = '<p style="opacity:0.6;font-style:italic">No votes yet...</p>';
 }
 
-// Copy Link
 document.getElementById('share').onclick = e => {
     e.preventDefault();
     navigator.clipboard.writeText(location.href);
-    const orig = e.target.textContent;
-    e.target.textContent = 'Copied! ✅';
-    setTimeout(() => e.target.textContent = orig, 2000);
+    e.target.textContent = 'Copied!';
+    setTimeout(() => e.target.textContent = 'Copy Share Link', 2000);
 };
 
-// Confetti Engine
 function confetti() {
     const c = document.getElementById('confetti');
     const ctx = c.getContext('2d');
-    c.width = window.innerWidth; c.height = window.innerHeight;
-    const p = Array.from({length:150}, () => ({
-        x: Math.random()*c.width, y: -20,
-        vx: (Math.random()-0.5)*10, vy: Math.random()*5+5,
-        c: `hsl(${Math.random()*360},80%,60%)`
-    }));
-    function draw() {
-        ctx.clearRect(0,0,c.width,c.height);
-        let active = false;
-        p.forEach(a => {
-            a.x += a.vx; a.y += a.vy; a.vy += 0.1;
-            ctx.fillStyle = a.c; ctx.fillRect(a.x, a.y, 8, 8);
-            if(a.y < c.height) active = true;
-        });
-        if(active) requestAnimationFrame(draw);
-    }
+    c.width = innerWidth; c.height = innerHeight;
+    const p = [];
+    for(let i=0;i<200;i++) p.push({x:Math.random()*c.width,y:-20,vx:(Math.random()-0.5)*10,vy:Math.random()*8+5,c:`hsl(${Math.random()*360},80%,60%)`});
+    const draw = () => { ctx.clearRect(0,0,c.width,c.height); p.forEach(a=>{a.x+=a.vx;a.y+=a.vy;a.vy+=0.2;ctx.fillStyle=a.c;ctx.fillRect(a.x,a.y,10,20)}); if(p.some(a=>a.y<c.height)) requestAnimationFrame(draw); };
     draw();
 }
+
+updateResults();
 </script>
 </body>
 </html>
-
-
-
