@@ -75,6 +75,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, onValue, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
+// Your Config    
 const firebaseConfig = {
   apiKey: "AIzaSyA6NhPTVFApdc7jmvurzn1-hCr37pqpzq0",
   authDomain: "u25-462c0.firebaseapp.com",
@@ -83,8 +84,6 @@ const firebaseConfig = {
   messagingSenderId: "728569015788",
   appId: "1:728569015788:web:858d545e3cb085f74964c9"
 };
-
-// Initialize Firebase
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
@@ -271,4 +270,5 @@ function confetti() {
 </script>
 </body>
 </html>
+
 
